@@ -1,4 +1,4 @@
-package ScooterPracticumServices;
+package scooter.pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -7,60 +7,56 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class FirstOrderForm {
-    private WebDriver driver;
+public class FirstOrderPageObject {
+    private final WebDriver driver;
 
     // кнопка Заказать
-    private By orderTop = By.xpath("//*[contains(@class, 'Header')]//button[text()='Заказать']");
+    private final By orderTop = By.xpath("//*[contains(@class, 'Header')]//button[text()='Заказать']");
     // локатор поля ввода «Имени»
-    private By inputName = By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/div[1]/input[1]");
+    private final By inputName = By.xpath(".//*[@Placeholder='* Имя']");
     // локатор поля ввода «Фамилии»
-    private By inputLastName = By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/div[2]/input[1]");
+    private final By inputLastName = By.xpath(".//*[@Placeholder='* Фамилия']");
     // локатор поля ввода «Адреса»
-    private By addresToBring = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[4]/div/div/input");
+    private final By addresToBring = By.xpath("//*[@Placeholder='* Адрес: куда привезти заказ']");
     // локатор поля выбора «Метро»
-    private By MetroStation = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[4]/div");
+    private final By MetroStation = By.xpath(".//*[@Placeholder='* Станция метро']");
     // локатор поля ввода «Номера телефона»
-    private By inputPhoneNumber = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
+    private final By inputPhoneNumber = By.xpath(".//*[@placeholder='* Телефон: на него позвонит курьер']");
     // нажатие на кнопку "Далее"
-    private By buttonFurther = By.xpath("//*[contains(@class,'Button')]//button[text()='Далее']");
+    private final By buttonFurther = By.xpath("//*[contains(@class,'Button')]//*[text()='Далее']");
     // нижняя кнопка "Заказать"
-    private By orderBot = By.xpath("//*[contains(@class, 'Button')]//button[text()='Заказать']");
+    private final By orderBot = By.xpath("//*[contains(@class, 'Button')]//*[text()='Заказать']");
     // hпинять все куки
-    private By cookieButton = By.xpath("//*[contains(@class, 'App')]//*[text()='да все привыкли']");
+    private final By cookieButton = By.xpath("//*[contains(@class, 'App')]//*[text()='да все привыкли']");
 
-
-    public FirstOrderForm(WebDriver driver) {
+    public FirstOrderPageObject(WebDriver driver) {
         this.driver = driver;
     }
-
 
     // метод кликает по кнопке «Заказать»
     public void clickOrderButton(String topOrBottom) {
         driver.findElement(cookieButton).click();
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.elementToBeClickable(orderTop));
-        WebElement element = driver.findElement(By.xpath("//*[contains(@class, '"+topOrBottom+"')]//button[text()='Заказать']"));    //скролл до блока элементов "Важные вопросы"
+        //скролл до блока элементов "Важные вопросы"
+        WebElement element = driver.findElement(By.xpath("//*[contains(@class, '" + topOrBottom + "')]//button[text()='Заказать']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
 
-        driver.findElement(By.xpath("//*[contains(@class, '"+topOrBottom+"')]//button[text()='Заказать']")).click();
+        driver.findElement(By.xpath("//*[contains(@class, '" + topOrBottom + "')]//button[text()='Заказать']")).click();
     }
 
     //метод заполняет поля «Имя»
     public void setInputName(String username) {
-
         driver.findElement(inputName).sendKeys(username);
     }
 
     //метод заполняет поля «Фамилия»
     public void setLastName(String lastname) {
-
         driver.findElement(inputLastName).sendKeys(lastname);
     }
 
     //метод заполняет поля «Адрес»
     public void setAddresToBring(String address) {
-
         driver.findElement(addresToBring).sendKeys(address);
     }
 
@@ -69,13 +65,14 @@ public class FirstOrderForm {
         driver.findElement(MetroStation).click();
         new WebDriverWait(driver, 30)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'select-search')]//ul")));
-        driver.findElement(By.xpath("//*[contains(@class, 'select-search')]//*[text()='"+stationName+"']")).click();
+        driver.findElement(By.xpath("//*[contains(@class, 'select-search')]//*[text()='" + stationName + "']")).click();
     }
 
     //метод заполняет поля «Телефон»
     public void setInputPhoneNumber(String phoneNumber) {
         driver.findElement(inputPhoneNumber).sendKeys(phoneNumber);
     }
+
     // нажатие на кнопку "далее"
     public void setButtonFurther() {
         driver.findElement(buttonFurther).click();

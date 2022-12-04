@@ -1,4 +1,4 @@
-package ScooterPracticumServices;
+package scooter;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
@@ -11,10 +11,9 @@ public class WebdriverSettings {
 
     @Before
     public void startUp() {
-
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+           options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);// драйвер для браузера Chrome
         driver.get("https://qa-scooter.praktikum-services.ru/");// переход на страницу тестового приложения
     }
